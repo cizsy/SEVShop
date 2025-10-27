@@ -21,7 +21,7 @@
            <a href="../Page/maintenance.php" class="icon-wishlist" title="Wishlist">
              <i class="bi bi-heart"></i>
            </a>
-           <a href="../Page/maintenance.php" class="icon-cart" title="Cart">
+           <a href="../Page/cart.php" class="icon-cart" title="Cart">
              <i class="bi bi-cart2"></i>
            </a>
            <a href="/index/login.html" class="login-button" title="Log In">

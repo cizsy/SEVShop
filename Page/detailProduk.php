@@ -7,44 +7,48 @@ include '../Component/header.php';
 
 
 <div class="view-produk container mb-5 ">
-    <div class="row">
-      <div class="col-md-12 d-flex flex-wrap shadow bg-white p-4 rounded ">
-        <div class="produk-img col-md-6 m-3">
-            <img src="/produk cover/dream gbttf.png" alt="go back to the future" class="img-fluid rounded shadow ">
-        </div>
-        <div class="product-info col-md-6 m-3">
-            <div class="nama-artis">NCT DREAM</div>
-            <div class="nama-produk">'Go Back To The Future' (Ultimate Park Ver.)
-            </div>
-            <div class="tag-idr">IDR</div>
-            <div class="harga-produk"> Rp. 270.000,00 </div>
-            <div class="beli">
-              <div class="label-barang">Set</div>
-                    <div class="kontrol-barang">
-                        <button class="btn-stok" onclick="decreaseQuantity()">-</button>
-                        <input type="number" class="input-stok" id="stok" value="1" min="1">
-                        <button class="btn-stok" onclick="increaseQuantity()">+</button>
-                        <span style="margin-left: auto; font-weight: 600;"> Rp. 270.00,00</span>
-                    </div>
-            </div>
-            <div class="total-harga">
-    <div class="selected-info">
-        <span id="selected-count">1</span> barang dipilih<br>
-    </div>
-    <div id="total-harga" style="font-size: 20px; font-weight: 700;">Rp. 270.000,00</div>
+  <div class="row">
+    <div class="col-md-12 d-flex flex-wrap shadow bg-white p-4 rounded ">
+
+      <button class="wishlist-btn" id="wishlistBtn">
+  <i class="bi bi-heart"></i>
+</button>
+      <div class="produk-img col-md-6 m-3">
+          <img src="/produk cover/dream gbttf.png" alt="go back to the future" class="img-fluid rounded shadow ">
+      </div>
+      <div class="product-info col-md-6 m-3">
+          <div class="nama-artis">NCT DREAM</div>
+          <div class="nama-produk">'Go Back To The Future' (Ultimate Park Ver.)
+          </div>
+          <div class="tag-idr">IDR</div>
+          <div class="harga-produk"> Rp. 270.000,00 </div>
+          <div class="beli">
+            <div class="label-barang">Set</div>
+                  <div class="kontrol-barang">
+                      <button class="btn-stok" onclick="decreaseQuantity()">-</button>
+                      <input type="number" class="input-stok" id="stok" value="1" min="1">
+                      <button class="btn-stok" onclick="increaseQuantity()">+</button>
+                      <span style="margin-left: auto; font-weight: 600;"> Rp. 270.00,00</span>
+                  </div>
+          </div>
+          <div class="total-harga">
+  <div class="selected-info">
+      <span id="selected-count">1</span> Barang dipilih<br>
+  </div>
+  <div id="total-harga" style="font-size: 20px; font-weight: 700;">Rp. 270.000,00</div>
 </div>
 
-               <div class="button-group">
-                <button class="btn-cart">Masukkan ke Keranjang</button>
-                <button class="btn-purchase">Pesan</button>
-            </div>
-              <div class="shipping-info">
-                    <span>📍</span>
-                    <span>Tambahkan alamat untuk memeriksa ongkir</span>
-                </div>
-        </div>
+              <div class="button-group">
+              <button class="btn-cart">Masukkan ke Keranjang</button>
+              <button class="btn-purchase">Pesan</button>
+          </div>
+            <div class="shipping-info">
+                  <span>📍</span>
+                  <span>Tambahkan alamat untuk memeriksa ongkir</span>
+              </div>
       </div>
     </div>
+  </div>
 </div>
 
   <div class="tabs-section container mt-5">

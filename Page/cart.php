@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #B3CCE5;
             min-height: 100vh;
             padding: 20px;
         }
@@ -74,7 +74,7 @@
         }
 
         .add-on-badge {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: #667eea;
             color: white;
             padding: 5px 12px;
             border-radius: 20px;
@@ -85,9 +85,10 @@
         .price-tag {
             font-size: 1.2rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: #f5576c;
+            border-radius: 10px;
+            padding: 5px 12px;
+            color: white;
         }
 
         .item-content {
@@ -169,7 +170,7 @@
         }
 
         .btn-view {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #667eea;
             color: white;
             padding: 10px 20px;
         }
@@ -291,6 +292,7 @@
             <button class="rewards-btn">SevShop Rewards ✨ IDR 0.00</button>
         </div>
 
+<!-- LIST BARANG ===============================================-->
         <div class="main-content">
             <div class="cart-items">
                 <div class="cart-item">
@@ -321,10 +323,10 @@
                                 <button class="btn btn-view">View Product</button>
                             </div>
 
-                            <div class="warning-box">
+                            <!-- <div class="warning-box">
                                 <span class="warning-icon">⚠</span>
                                 <span class="warning-text">Purchasing this item requires: <strong>Minimum purchase IDR 500.000</strong>. Add more products to your cart to proceed with checkout.</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -362,16 +364,16 @@
             </div>
 
             <div class="summary-card">
-                <h2 class="summary-title">Games and Apps Summary</h2>
+                <h2 class="summary-title">Total Belanja</h2>
                 
                 <div class="summary-row">
-                    <span class="summary-label">Price</span>
+                    <span class="summary-label">Harga</span>
                     <span class="summary-value" id="totalPrice">IDR 600.000</span>
                 </div>
 
                 <div class="summary-row">
-                    <span class="summary-label">Taxes</span>
-                    <span class="summary-value">Calculated at Checkout</span>
+                    <span class="summary-label">Pajak</span>
+                    <span class="summary-value">Akan dihitung ketika dipesan</span>
                 </div>
 
                 <div class="summary-row">
@@ -383,7 +385,7 @@
             </div>
         </div>
 
-        <p class="note">* The lowest price offered on SevShop in the last 30 days before discount</p>
+        <!-- <p class="note">* The lowest price offered on SevShop in the last 30 days before discount</p> -->
     </div>
 
     <script>
