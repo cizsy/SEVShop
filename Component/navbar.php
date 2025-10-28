@@ -18,7 +18,7 @@
          </form>
          
          <div class="navbar-options" style="height: 40px;">
-           <a href="../Page/maintenance.php" class="icon-wishlist" title="Wishlist">
+           <a href="../Page/wishlist.php" class="icon-wishlist" title="Wishlist">
              <i class="bi bi-heart"></i>
            </a>
            <a href="../Page/cart.php" class="icon-cart" title="Cart">

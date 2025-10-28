@@ -355,6 +355,49 @@ margin-bottom: 15px;
   margin-bottom: 20px;
 }
 
+.wishlist-btn {
+    position: absolute; /* Ubah dari absolute */
+    top: 0;
+    right: 0;
+    margin: 0;
+    background: white;
+    border: 1px solid #e91e63;
+    box-shadow: none;
+    outline: none;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;    
+    transition: all 0.3s;
+    font-size: 20px;
+}
+
+.wishlist-btn:focus {
+    outline: none;
+}
+
+.wishlist-btn:hover {
+    background: #fce4ec;
+    transform: scale(1.1);
+}
+
+.wishlist-btn i {
+    font-size: 40px;
+    transition: all 0.3s;
+}
+
+.wishlist-btn i.bi-heart-fill {
+    color: #e91e63 !important;
+    animation: heartbeat 0.3s ease-in-out;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
 .harga-produk {
   font-size: 25px;
   font-weight: 700;

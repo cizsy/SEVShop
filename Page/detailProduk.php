@@ -9,19 +9,21 @@ include '../Component/header.php';
 <div class="view-produk container mb-5 ">
   <div class="row">
     <div class="col-md-12 d-flex flex-wrap shadow bg-white p-4 rounded ">
-
-      <button class="wishlist-btn" id="wishlistBtn">
-  <i class="bi bi-heart"></i>
-</button>
       <div class="produk-img col-md-6 m-3">
           <img src="/produk cover/dream gbttf.png" alt="go back to the future" class="img-fluid rounded shadow ">
       </div>
-      <div class="product-info col-md-6 m-3">
-          <div class="nama-artis">NCT DREAM</div>
-          <div class="nama-produk">'Go Back To The Future' (Ultimate Park Ver.)
-          </div>
-          <div class="tag-idr">IDR</div>
-          <div class="harga-produk"> Rp. 270.000,00 </div>
+        <div class="product-info col-md-6 m-3">
+            <div class="d-flex align-items-start mb-3">
+                <div class="grow">
+                    <div class="nama-artis">NCT DREAM</div>
+                    <div class="nama-produk">'Go Back To The Future' (Ultimate Park Ver.)</div>
+                </div>
+                 <button class="wishlist-btn" id="wishlistBtn">
+                    <i class="bi bi-heart"></i>
+            </button>
+            </div>
+            <div class="tag-idr">IDR</div>
+            <div class="harga-produk"> Rp. 270.000,00 </div>
           <div class="beli">
             <div class="label-barang">Set</div>
                   <div class="kontrol-barang">
@@ -319,9 +321,75 @@ include '../Component/header.php';
 
 
    <script>
+
+    // ===== KODE WISHLIST =====
+// Inisialisasi wishlist data di variabel global
+if (!window.wishlistData) {
+    window.wishlistData = {};
+}
+
+// Data produk saat ini
+const currentProduct = {
+    id: 'nct-dream-gbttf', // ID unik untuk produk ini
+    name: "'Go Back To The Future' (Ultimate Park Ver.)",
+    group: 'NCT DREAM',
+    price: 270000,
+    emoji: '🎵',
+    image: '/produk cover/dream gbttf.png'
+};
+
+// Cek apakah produk sudah di wishlist
+function isInWishlist() {
+    return window.wishlistData[currentProduct.id] !== undefined;
+}
+
+// Update tampilan tombol wishlist
+function updateWishlistButton() {
+    const wishlistBtn = document.getElementById('wishlistBtn');
+    const icon = wishlistBtn.querySelector('i');
+    
+    if (isInWishlist()) {
+        icon.className = 'bi bi-heart-fill';
+        wishlistBtn.style.color = '#e91e63';
+    } else {
+        icon.className = 'bi bi-heart';
+        wishlistBtn.style.color = '#666';
+    }
+}
+
+// Toggle wishlist
+function toggleWishlist() {
+    if (isInWishlist()) {
+        // Hapus dari wishlist
+        delete window.wishlistData[currentProduct.id];
+        alert('Produk dihapus dari wishlist!');
+    } else {
+        // Tambah ke wishlist
+        window.wishlistData[currentProduct.id] = currentProduct;
+        alert('Produk ditambahkan ke wishlist! ❤️');
+    }
+    
+    // Update tampilan button
+    updateWishlistButton();
+    
+    // Trigger event untuk notify halaman wishlist
+    window.dispatchEvent(new CustomEvent('wishlistUpdated', { 
+        detail: { 
+            action: isInWishlist() ? 'add' : 'remove', 
+            productId: currentProduct.id 
+        }
+    }));
+}
+
+// Event listener untuk tombol wishlist
+document.getElementById('wishlistBtn').addEventListener('click', toggleWishlist);
+
+// Initialize button state saat halaman dimuat
+updateWishlistButton();
+
+// fungsi harga
          let currentQuantity = 1;
          const basePrice = 270.000;
-
     function increaseQuantity() {
         if (currentQuantity < 10) {
             currentQuantity++;
