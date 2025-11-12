@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IWALK</title>
+  <title>Flexy Free Bootstrap Admin Template by WrapPixel</title>
   <link rel="shortcut icon" type="image/png" href="./assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="./assets/css/styles.min.css" />
 </head>
@@ -17,12 +17,13 @@
     <!--  App Topstrip -->
     <div class="app-topstrip bg-dark py-6 px-3 w-100 d-lg-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center justify-content-center gap-5 mb-2 mb-lg-0">
-        <p class="width: 150px">.</p>
+        <a class="d-flex justify-content-center" href="#">
+          <img src="./assets/images/logos/logo-wrappixel.svg" alt="" width="150">
+        </a>
 
         
       </div>
 
-      
 
     </div>
     <!-- Sidebar Start -->
@@ -31,7 +32,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="./index.html" class="text-nowrap logo-img">
-            <img src="assets/images/logos/logo.svg" alt="" />
+            <img src="./assets/images/logos/logo.svg" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-6"></i>
@@ -1136,7 +1137,7 @@
                 
               </a>
               <ul aria-expanded="false" class="collapse first-level">
-
+                
                 <li class="sidebar-item">
                   <a class="sidebar-link justify-content-between"  
                     href="#">
@@ -1806,7 +1807,7 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link " href="javascript:void(0)" id="drop1" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="ti ti-bell"></i>
+                <iconify-icon icon="solar:bell-linear" class="fs-6"></iconify-icon>
                 <div class="notification bg-primary rounded-circle"></div>
               </a>
               <div class="dropdown-menu dropdown-menu-animate-up" aria-labelledby="drop1">
@@ -1854,8 +1855,60 @@
       <!--  Header End -->
       <div class="body-wrapper-inner">
         <div class="container-fluid">
-          <!--  Row 1 -->
-
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold mb-4">Forms</h5>
+              <div class="card">
+                <div class="card-body">
+                  <form>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Email address</label>
+                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                </div>
+              </div>
+              <h5 class="card-title fw-semibold mb-4">Disabled forms</h5>
+              <div class="card mb-0">
+                <div class="card-body">
+                  <form>
+                    <fieldset disabled>
+                      <legend>Disabled fieldset example</legend>
+                      <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Disabled input</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label">Disabled select menu</label>
+                        <select id="disabledSelect" class="form-select">
+                          <option>Disabled select</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>
+                          <label class="form-check-label" for="disabledFieldsetCheck">
+                            Can't check this
+                          </label>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1864,9 +1917,7 @@
   <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/js/sidebarmenu.js"></script>
   <script src="./assets/js/app.min.js"></script>
-  <script src="./assets/libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src="./assets/libs/simplebar/dist/simplebar.js"></script>
-  <script src="./assets/js/dashboard.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>

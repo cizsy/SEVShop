@@ -22,18 +22,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Data Artis</title>
+    <link rel="stylesheet" href="../../../css/form.css">
 </head>
 <body>
-    <div>
+    <div class="form-body-wrapper-inner">
+    <div class="card">
+        <h4 class="card-title">Masukkan Nama Artis</h4>
         <form action="" method="post">
-            <label>Nama Artis:</label><br>
-            <input type="text" name="nama_artis" required><br><br>
-            <button type="submit">Simpan</button>
+            <label class="form-label">Nama Artis:</label><br>
+            <input type="text" name="nama_artis" required class="input-box"><br><br>
+            <button type="submit" class="button">Simpan</button>
         </form>
+    </div>
     </div>
 </body>
 </html>
