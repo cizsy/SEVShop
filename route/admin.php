@@ -1,7 +1,6 @@
 <?php
 // session_start();
-require_once('../../config/Database.php');
-require_once('../../model/models.php');
+require_once('../config/Database.php');
 require_once('../../controller/controllers.php');
 
 
@@ -13,7 +12,7 @@ $action = $_GET['action'] ?? 'index';
 // Routes for admin panel
 
 switch ($page){
-    case 'dashboard' : include "page/dashboard.php"; break;
+    case 'dashboard' : include "../Page/admin/admin-page/index.php"; break;
     case 'genre' : {  
         switch ($action) {
             case 'delete' : 

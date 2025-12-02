@@ -45,10 +45,11 @@ $newArrival = [
 <!DOCTYPE html>
 <html lang="en">
 
+<?php include __DIR__ . '/../Component/head.php'; ?>
 
 <body>
-    <?php require_once '../Component/navbar.php'; ?>
-    <?php require_once '../Component/heroo.php'; ?>
+    <?php include __DIR__ . '/../Component/navbar.php'; ?>
+    <?php include __DIR__ . '/../Component/heroo.php'; ?>
     <div class="recart text-center fw-bold fs-4 mt-4">Recommended Artists</div>
 <div class="iconArtist d-flex justify-content-center gap-3 flex-wrap mb-4 px-3">
   
@@ -98,7 +99,7 @@ $newArrival = [
 
 <!-- rekomendasi produk -->
  <div class="container-produk-display justify-content-center mb-5">
-  <a href="/ndex/viewAll.html">
+  <a href="bestSeller.php">
         <div class="produk-display-home-header">
             BEST SELLER
         </div>
