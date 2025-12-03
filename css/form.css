@@ -1,4 +1,4 @@
-.card{
+.card-form-c{
     padding: 20px;
     margin: 20px;
     border: 2px solid #ccc;
@@ -6,20 +6,20 @@
     background-color: #948cdb;
 }
 
-.card-title{
+.card-title-c{
     font-size: 25px;
     margin-bottom: 15px;
     color: #000000;
     text-align: center;
 }
 
-.form-label{
+.form-label-c{
     font-size: 18px;
     color: #000000;
     text-align: center;
 }
 
-.input-box{
+.input-box-form-c{
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -29,7 +29,7 @@
     box-sizing: border-box;
 }
 
-.button{
+.button-form-c{
     background-color: #340746;
     color: white;
     padding: 10px 20px;
