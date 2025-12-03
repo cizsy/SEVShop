@@ -314,7 +314,7 @@ include '../Component/header.php';
         </div>
     </div>
 </div>
-
+</div>
 
     <?php include '../Component/footer.php';
     ?>

@@ -1,0 +1,43 @@
+.card-form-c{
+    padding: 20px;
+    margin: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: #948cdb;
+}
+
+.card-title-c{
+    font-size: 25px;
+    margin-bottom: 15px;
+    color: #000000;
+    text-align: center;
+}
+
+.form-label-c{
+    font-size: 18px;
+    color: #000000;
+    text-align: center;
+}
+
+.input-box-form-c{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button-form-c{
+    background-color: #340746;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 250px;
+    font-size: 16px;
+    margin: 0 auto;
+    display: block;
+}

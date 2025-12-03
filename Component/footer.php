@@ -1,4 +1,4 @@
-q <footer class="footer">
+<footer class="footer">
         <div class="footer-container">
             <div class="footer-logo">
                 <a href="index.html" class="logo">

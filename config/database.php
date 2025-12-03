@@ -1,19 +1,29 @@
 <?php
-class Database{
-    private $connection;
-    public function getConnection(){
-        $this->connection = null;
-        try{
-            $this->connection = new mysqli("localhost", "root", '', "db_sevshop");
+class Database {
+    private $host = "localhost";
+    private $db_name = "sevshop_db";
+    private $username = "root"; 
+    private $password = "";
+    private $conn;
 
-            if($this->connection->connect_error){
-                die("Connection failed: " . $this->connection->connect_error);
+    public function getConnection() {
+        $this->conn = null;
+
+        try {
+            
+            $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+            
+            if ($this->conn->connect_error) {
+                die("Koneksi gagal: " . $this->conn->connect_error);
             }
-
-            $this->connection->set_charset("utf8");
-            return $this->connection;
-        }catch(Exception $e){
-            echo 'Connection failed : '.$e->getMessage();
+            
+            $this->conn->set_charset("utf8");
+            
+        } catch (Exception $e) {
+            echo "Error koneksi: " . $e->getMessage();
         }
+
+        return $this->conn;
     }
-}   
+}
+?>  

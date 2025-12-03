@@ -1,26 +1,28 @@
 <?php 
-    
-    require_once('config/database.php');
-    require_once('model/models.php');
-    require_once('controller/controllers.php');
 
-    // $genre = new GenreController();
+$page = isset($_GET['Page']) ? $_GET['Page'] : 'home';
 
-    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-
-            if($page == 'home') { include "page/home.php"; }
-            else if ($page == 'shopAll') { include "page/shopAll.php"; }
-            else if ($page == 'detail') { include "page/detailProduk.php"; }
-            else if ($page == 'cart') { include "page/cart.php"; }
-            else if ($page == 'checkout') { include "page/checkout.php"; }
-            else if ($page == 'about') { include "page/about.php"; }
-            else if ($page == 'contact') { include "page/contact.php"; }
-            else if ($page == 'login') { include "page/login.php"; }
-            else if ($page == 'register') { include "page/register.php"; }
-            else if ($page == 'profile') { include "page/profile.php"; }
-            else if ($page == 'faq') { include "page/faq.php"; }
-            else if ($page == 'terms') { include "page/terms.php"; }
-            else if ($page == 'privacy') { include "page/privacy.php"; }
-            else if ($page == 'admin') { include "route/admin.php"; }
-            else if($page == 'admin') { include "page/admin/dashboard.php"; }   
-            else if($page == 'maintenance') { include "page/maintenance.php"; } 
+if ($page == 'home') {
+    include "../Page/home.php";
+} else if ($page == 'login') {
+    include "../Page/login.php";
+} else if ($page == 'register') {
+    include "../Page/register.php";
+} else if ($page == 'cart') {
+    include "../Page/cart.php";
+} else if ($page == 'wishlist') {
+    include "../Page/wishlist.php";
+} else if ($page == 'review') {
+    include "../Page/review.php";
+} else if ($page == 'detailProduk') {
+    include "../Page/detailProduk.php";
+} else if ($page == 'bestSeller') {
+    include "../Page/bestSeller.php";
+} else if ($page == 'h2hproduk') {
+    include "../Page/h2hproduk.php";
+} else if ($page == 'maintenance') {
+    include "../Page/maintenance.php";
+} else {
+    echo "Halaman tidak ditemukan.";
+}
+?>

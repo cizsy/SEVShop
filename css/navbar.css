@@ -1,0 +1,87 @@
+.navbar {
+  background-color: #FFE6E6;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.kotak-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  
+}
+/* Logo */
+.navbar-brand img {
+  height: 40px;
+  width: 145px;
+}
+
+/* Search Bar */
+.search-bar {
+  flex-grow: 1;
+  margin: 0 30px;
+}
+
+.search-wrap {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 15px 10px 40px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-size: 14px;
+  color: #333;
+}
+
+/* Right Menu */
+.navbar-options {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.icon-wishlist, .icon-cart {
+  font-size: 20px;
+  color: #333;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.icon-wishlist:hover {
+  color: #000;
+}
+
+.login-button {
+  padding: 8px 16px;
+  border: 1px solid #333;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
