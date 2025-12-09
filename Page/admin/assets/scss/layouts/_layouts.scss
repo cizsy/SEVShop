@@ -24,7 +24,7 @@ body {
     margin: 0 auto;
     padding: $grid-gutter-width;
     transition: 0.2s ease-in;
-    padding-top: 0px;
+    padding-top: 180px;
 
     @include media-breakpoint-down(lg){
       padding-top: 230px;
@@ -50,10 +50,10 @@ body {
   &[data-sidebar-position="fixed"] {
     .left-sidebar {
       position: fixed;
-      top: 0px;
+      top: 65px;
 
       @include media-breakpoint-down(lg){
-        top: 0px;
+        top: 131px;
       }
     }
   }
@@ -127,9 +127,4 @@ body {
       height: calc(100vh - 240px);
     }
   }
-}
-
-#main-wrapper[data-layout="vertical"][data-header-position="fixed"] 
-.body-wrapper > .container-fluid {
-  padding-top: 0 !important;
 }

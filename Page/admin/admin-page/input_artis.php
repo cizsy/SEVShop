@@ -1876,25 +1876,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
       </header>
       <!--  Header End -->
-      <div class="body-wrapper-inner">
-        <div class="container-fluid">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4">Form Input Artists</h5>
-              <div class="card">
-                <div class="card-body">
-                    <form action="" method="post">
-                    <label class="form-label">Nama Artis:</label><br>
-                    <input type="text" name="nama_artis" required class="input-box"><br><br>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </fieldset>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
       </div>
     </div>
   </div>
