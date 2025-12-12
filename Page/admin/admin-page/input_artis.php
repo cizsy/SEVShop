@@ -190,7 +190,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <!--  Header End -->
  <div class="body-wrapper-inner">
         <div class="container-fluid">
-          <div class="card">
+            <div class="d-flex justify-content-end mb-3">
+            <a href="view_artis.php" class="btn text-white"
+            style="background-color:#1E4ED8; border-radius:8px; padding:8px 18px;">
+            Lihat Data
+          </a>
+            </div>
+             <div class="card">
             <div class="card-body">
               <h5 class="card-title fw-semibold mb-4">Form Artis</h5>
               <div class="card">
@@ -206,12 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
             </div>
           </div>
-            <div>
-              <a href="view_artis.php">
-              <button type="button" class="btn btn-primary justify-content-center m-auto">Lihat Data
-              </button>
-              </a>
-            </div>
           </div>
          </div>
       </div>
