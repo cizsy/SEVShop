@@ -206,7 +206,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               </div>
             </div>
           </div>
-        </div>
+            <div>
+              <a href="view_artis.php">
+              <button type="button" class="btn btn-primary justify-content-center m-auto">Lihat Data
+              </button>
+              </a>
+            </div>
+          </div>
+         </div>
       </div>
     </div>
   </div>
