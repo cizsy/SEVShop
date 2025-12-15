@@ -1,27 +1,6 @@
 
 <?php
-include '../../../config/database.php';
-
-
-$db = new Database();
-$conn = $db->getConnection();
-
-// Jika tombol submit ditekan
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama = $_POST['nama_artis'];
-
-    // Gunakan prepared statement untuk keamanan
-    $stmt = $conn->prepare("INSERT INTO artis (nama_artis) VALUES (?)");
-    $stmt->bind_param("s", $nama);
-    
-    if ($stmt->execute()) {
-        $stmt->close();
-        header("Location: index.php");
-        exit;
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-}
+require_once '../../../config/database.php';
 ?>
 
 <!doctype html>
@@ -201,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <h5 class="card-title fw-semibold mb-4">Form Artis</h5>
               <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="../../../Controller/Artis_controller.php" method="post">
                     <label class="form-label">Nama Artis:</label><br>
                     <input type="text" name="nama_artis" required class="input-box"><br><br>
                       </div>
