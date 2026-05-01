@@ -5,24 +5,23 @@ class Database {
     private $username = "root"; 
     private $password = "";
     private $conn;
+    private static $instance = null;
+
+    private function __construct() {
+        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
     public function getConnection() {
-        $this->conn = null;
-
-        try {
-            
-            $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
-            
-            if ($this->conn->connect_error) {
-                die("Koneksi gagal: " . $this->conn->connect_error);
-            }
-            
-            $this->conn->set_charset("utf8");
-            
-        } catch (Exception $e) {
-            echo "Error koneksi: " . $e->getMessage();
-        }
-
         return $this->conn;
     }
 }
