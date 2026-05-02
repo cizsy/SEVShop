@@ -1,60 +1,61 @@
-<?php include '../../../config/database.php';
+<?php 
+include '../../../config/database.php';
+include '../../../Model/Product.php';
+include '../../../Model/artist.php';
+include '../../../Model/Kategori.php';
+include '../../../Model/Penerbit.php';
 
-$db = new Database();
-$conn = $db->getConnection();
+$productModel = new Product();
+$artistModel = new Artis();
+$kategoriModel = new Kategori();
+$penerbitModel = new Penerbit();
 
-// ambil data foreign key
-$artis = $conn->query("SELECT id_artis, nama_artis FROM artis");
-$kategori = $conn->query("SELECT id_kategori, jenis_kategori FROM kategori");
-$penerbit = $conn->query("SELECT id_penerbit, nama_penerbit FROM penerbit");
+$id = $_GET['id'] ?? null;
+$row = $id ? $productModel->getById($id) : [];
 
-$id = $_GET['id']; 
-$q = "SELECT * FROM produk WHERE id_produk ='id'";
-$result = $conn->query($q);
-$row = $result->fetch_assoc(); 
+// TAMBAHAN: Ambil data list untuk dropdown select
+// Sesuaikan nama function 'getAll()' dengan function yang ada di dalam class Model kamu
+$artis_list = $artistModel->readAll(); 
+$kategori_list = $kategoriModel->readAll(); 
+$penerbit_list = $penerbitModel->readAll(); 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Siapkan data sesuai struktur
+    $data = [
+        'name'          => $_POST['nama_produk'],
+        'artis_id'      => $_POST['id_artis'],
+        'price'         => $_POST['harga'],
+        'stock'         => $_POST['stok'],
+        'detail'        => $_POST['detail_produk'], // Pastikan ini teks, bukan file
+        'thn_terbit'    => $_POST['thn_terbit'],
+        'category_id'   => $_POST['id_kategori'],
+        'penerbit_id'   => $_POST['id_penerbit'],
+        'notice'        => $_POST['notice'] ?? '', 
+        'terms'         => $_POST['terms'] ?? '',
+        'size'          => $_POST['size'] ?? '',
+        'contents'      => $_POST['contents'] ?? '',
+        'komentar_id'   => null, 
+        'jenis_id'      => null,  
+        'gambar_produk' => $row['gambar_produk'] ?? '' 
+    ];
 
-    $nama_produk = $_POST['nama_produk'];
-    $id_artis = $_POST['id_artis'];
-    $harga = $_POST['harga'];
-    $stok = $_POST['stok'];
-    $detail = $_POST['detail'];
-    $thn_terbit = $_POST['thn_terbit'];
-    $id_kategori = $_POST['id_kategori'];
-    $id_penerbit = $_POST['id_penerbit'];
+    // Handle upload gambar
+    if (!empty($_FILES['gambar_produk']['name'])) {
+        $gambar = $_FILES['gambar_produk']['name'];
+        move_uploaded_file($_FILES['gambar_produk']['tmp_name'], "uploads/" . $gambar);
+        $data['gambar_produk'] = $gambar;
+    }
 
-    // upload gambar
-    $gambar = $_FILES['gambar_produk']['name'];
-    $tmp = $_FILES['gambar_produk']['tmp_name'];
-    move_uploaded_file($tmp, "uploads/" . $gambar);
-
-    // prepared statement
-    $stmt = $conn->prepare("
-        INSERT INTO produk 
-        (nama_produk, id_artis, harga, stok, detail, gambar_produk, thn_terbit, id_kategori, id_penerbit)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
-
-    $stmt->bind_param(
-        "sidissiiii",
-        $nama_produk,
-        $id_artis,
-        $harga,
-        $stok,
-        $detail,
-        $gambar,
-        $thn_terbit,
-        $id_kategori,
-        $id_penerbit
-    );
-
-    if ($stmt->execute()) {
-        $stmt->close();
-        header("Location: index.php");
-        exit;
+    // Eksekusi pakai Model
+    if ($id) {
+        $result = $productModel->update($id, $data);
     } else {
-        echo "Error: " . $stmt->error;
+        $result = $productModel->create($data);
+    }
+
+    if ($result) {
+        header("Location: index.php?status=success");
+        exit;
     }
 }
 ?>
@@ -223,63 +224,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
       </header>
       <!--  Header End -->
- <div class="body-wrapper-inner">
+        <div class="body-wrapper-inner">
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title fw-semibold mb-4">Form Input Produk</h5>
               <div class="card">
+                <fieldset>
                 <div class="card-body">
-                    <form action="" method="post" id="formProduk">
+                    <form action="" method="post" id="formProduk" enctype="multipart/form-data">
                     <label class="form-label">Nama Produk</label><br>
-                    <input type="text" name="nama_produk" required class="input-box"><br><br>
+                    <input type="text" name="nama_produk" value="<?= $row['nama_produk'] ?? '' ?>" class="form-control"><br><br>
+
                     <label class="form-label">Artis</label><br>
-                    <select name="id_artis" required>
-                        <option value="<?= $row['id_artis'] ?>">
-                        <?= $row['nama_artis'] ?></option>
-                    </select> <br><br>
-                    <label class="form-label">Harga</label></label><br>
-                    <input type="number" name="harga" required class="input-box"><br><br>
+                    <select name="id_artis" class="form-select" required>
+                        <?php while ($a = $artis_list->fetch_assoc()) { ?>
+                            <option value="<?= $a['id_artis'] ?>" <?= (isset($row['id_artis']) && $a['id_artis'] == $row['id_artis']) ? 'selected' : '' ?>>
+                                <?= $a['nama_artis'] ?>
+                            </option>
+                        <?php } ?>
+                    </select><br><br>
+
+                    <label class="form-label">Harga</label><br>
+                    <input type="number" name="harga" value="<?= $row['harga'] ?? 0 ?>" required class="form-control"><br><br>
 
                     <label class="form-label">Stok</label><br>
-                    <input type="number"
-                    name="stok" required><br><br>
+                    <input type="number" name="stok" value="<?= $row['stok'] ?? '' ?>" required class="form-control"><br><br>
 
-                    <label class="form-label">Detail produk</label></label><br>
-                    <textarea name="detail_produk" required class="input-box"></textarea><br><br>
+                    <label class="form-label">Detail produk</label><br>
+                    <textarea name="detail_produk" class="form-control" required><?= $row['detail_produk'] ?? '' ?></textarea><br><br>
 
                     <label class="form-label">Gambar Produk:</label><br>
-                    <input type="file" name="gambar_produk" class="input-box" required><br><br>
+                    <input type="file" name="gambar_produk" class="form-control" <?= $id ? '' : 'required' ?>><br><br>
 
                     <label class="form-label">Tahun Terbit:</label><br>
-                    <input type="number" name="thn_terbit" required class="input-box"><br><br>
+                    <input type="number" name="thn_terbit" value="<?= $row['thn_terbit'] ?? '' ?>" required class="form-control"><br><br>
 
                     <label class="form-label">Kategori:</label><br>
-                    <select name="id_kategori" required>
+                    <select name="id_kategori" class="form-select" required>
                         <option value="">-- Pilih Kategori --</option>
-                        <?php while ($row = $kategori->fetch_assoc()) { ?>
-                            <option value="<?= $row['id_kategori'] ?>">
-                                <?= $row['jenis_kategori'] ?>
+                        <?php while ($k = $kategori_list->fetch_assoc()) { ?>
+                            <option value="<?= $k['id_kategori'] ?>" <?= (isset($row['id_kategori']) && $k['id_kategori'] == $row['id_kategori']) ? 'selected' : '' ?>>
+                                <?= $k['nama_kategori'] ?>
                             </option>
                         <?php } ?>
-                    </select>
-                    <br><br>
+                    </select><br><br>
 
                     <label class="form-label">Penerbit:</label><br>
-                    <select name="id_penerbit" required>
+                    <select name="id_penerbit" class="form-select" required>
                         <option value="">-- Pilih Penerbit --</option>
-                        <?php while ($row = $penerbit->fetch_assoc()) { ?>
-                            <option value="<?= $row['id_penerbit'] ?>">
-                                <?= $row['nama_penerbit'] ?>
+                        <?php while ($pub = $penerbit_list->fetch_assoc()) { ?>
+                            <option value="<?= $pub['id_penerbit'] ?>" <?= (isset($row['id_penerbit']) && $pub['id_penerbit'] == $row['id_penerbit']) ? 'selected' : '' ?>>
+                                <?= $pub['nama_penerbit'] ?>
                             </option>
                         <?php } ?>
-                    </select>
-                    <br><br>
+                    </select><br><br>
 
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </fieldset>
-                  </form>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
                 </div>
               </div>
             </div>
