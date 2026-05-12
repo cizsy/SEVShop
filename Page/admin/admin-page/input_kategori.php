@@ -1,22 +1,18 @@
-
 <?php
-include '../../../config/database.php'; 
+require_once '../../../config/database.php';
 
+$db = Database::getInstance();
+$conn = $db->getConnection();
 
-$db =new Database();
-$conn =$db->getConnection();
-
-// submit handling
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $kategori = $_POST['jenis_kategori'];
+    $nama_kategori = $_POST['nama_kategori'];
 
-    // prepared statement
-    $stmt = $conn->prepare("INSERT INTO kategori (jenis_kategori) VALUES (?)");
-    $stmt->bind_param("s", $kategori);
-    
+    $stmt = $conn->prepare("INSERT INTO kategori (nama_kategori) VALUES (?)");
+    $stmt->bind_param("s", $nama_kategori);
+
     if ($stmt->execute()) {
         $stmt->close();
-        header("Location: index.php");
+        header("Location: read_kategori.php");
         exit;
     } else {
         echo "Error: " . $stmt->error;
@@ -196,12 +192,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <div class="card">
                 <div class="card-body">
                     <form action="" method="post" id="formKategori">
-                    <label class="form-label">Jenis Kategori</label><br>
-                    <input type="text" name="jenis_kategori" required class="input-box"><br><br>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </fieldset>
-                  </form>
+                    <label class="form-label">Nama Kategori</label>
+                    <input type="text" name="nama_kategori" required class="form-control mb-3">
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
                 </div>
               </div>
             </div>

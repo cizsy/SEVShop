@@ -1,7 +1,7 @@
 <?php 
 include '../../../config/database.php';
 include '../../../Model/Product.php';
-include '../../../Model/artist.php';
+include '../../../Model/artis.php';
 include '../../../Model/Kategori.php';
 include '../../../Model/Penerbit.php';
 

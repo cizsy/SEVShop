@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../Model/artist.php';
+require_once __DIR__ . '/../Model/artis.php';
 $artistModel = new Artis();
 $artists = $artistModel->getRandomArtis(8);
 

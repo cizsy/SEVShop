@@ -18,7 +18,7 @@
 <!-- LIST BARANG ===============================================-->
         <div class="main-content">
             <div class="cart-items">
-                <div class="cart-item">
+                <!-- <div class="cart-item">
                     <div class="item-header">
                         <span class="add-on-badge">Add-On</span>
                         <span class="price-tag">IDR 350.000</span>
@@ -46,15 +46,15 @@
                                 <button class="btn btn-view">View Product</button>
                             </div>
 
-                            <!-- <div class="warning-box">
+                            <div class="warning-box">
                                 <span class="warning-icon">⚠</span>
                                 <span class="warning-text">Purchasing this item requires: <strong>Minimum purchase IDR 500.000</strong>. Add more products to your cart to proceed with checkout.</span>
                             </div> -->
-                        </div>
+                        <!-- </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="cart-item">
+                <!-- <div class="cart-item">
                     <div class="item-header">
                         <span class="add-on-badge">Add-On</span>
                         <span class="price-tag">IDR 250.000</span>
@@ -84,9 +84,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="summary-card">
+            <!-- <div class="summary-card">
                 <h2 class="summary-title">Total Belanja</h2>
                 
                 <div class="summary-row">
@@ -108,8 +108,8 @@
             </div>
         </div>
 
-        <!-- <p class="note">* The lowest price offered on SevShop in the last 30 days before discount</p> -->
-    </div>
+        <p class="note">* The lowest price offered on SevShop in the last 30 days before discount</p> -->
+    <!-- </div> -->
 
     <script>
         function removeItem(button) {

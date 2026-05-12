@@ -1,5 +1,6 @@
 <?php
-// Controller/ProductController.php
+session_start();
+
 require_once __DIR__ . '/../Model/Product.php';
 
 class ProductController {
@@ -10,76 +11,51 @@ class ProductController {
     }
 
     public function handleRequest() {
-        $action = $_GET['action'] ?? 'list';
-        $id     = $_GET['id'] ?? null;
+        $action = $_GET['action'] ?? '';
+        $id = $_GET['id'] ?? null;
 
-        // Only validate CSRF on state-changing POST requests
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->verifyCsrf();
+            $data = [
+                'name'          => $_POST['nama_produk'] ?? '',
+                'artis_id'      => $_POST['id_artis'] ?? 0,
+                'price'         => $_POST['harga'] ?? 0,
+                'stock'         => $_POST['stok'] ?? 0,
+                'detail'        => $_POST['detail_produk'] ?? '',
+                'gambar_produk' => $_POST['gambar_produk'] ?? '',
+                'thn_terbit'    => $_POST['thn_terbit'] ?? 0,
+                'category_id'   => $_POST['id_kategori'] ?? 0,
+                'penerbit_id'   => $_POST['id_penerbit'] ?? 0,
+                'komentar_id'   => $_POST['id_komentar'] ?? 0,
+                'jenis_id'      => $_POST['id_jenis'] ?? 0,
+                'notice'        => $_POST['notice'] ?? '',
+                'terms'         => $_POST['terms'] ?? '',
+                'size'          => $_POST['size'] ?? '',
+                'contents'      => $_POST['contents'] ?? ''
+            ];
+
+            if ($action === 'create') {
+                $this->productModel->create($data);
+            }
+
+            if ($action === 'update' && $id) {
+                $this->productModel->update($id, $data);
+            }
+
+            header("Location: ../Page/admin/admin-page/read_produk.php");
+            exit;
         }
 
-        switch ($action) {
-            case 'create':
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $result = $this->productModel->create($_POST);
-                    if (!$result) {
-                        $_SESSION['flash_error'] = 'Failed to create product.';
-                    }
-                    header("Location: admin.php?page=produk");
-                    exit;
-                }
-                break;
+        if ($action === 'delete' && $id) {
+            $this->productModel->delete($id);
 
-            case 'update':
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $result = $this->productModel->update($id, $_POST);
-                    if (!$result) {
-                        $_SESSION['flash_error'] = 'Failed to update product.';
-                    }
-                    header("Location: admin.php?page=produk");
-                    exit;
-                }
-                break;
-
-            case 'delete':
-                // Delete uses GET, so protect it with a token in the URL instead
-                $this->verifyDeleteToken($id);
-                $result = $this->productModel->delete($id);
-                if (!$result) {
-                    $_SESSION['flash_error'] = 'Failed to delete product.';
-                }
-                header("Location: admin.php?page=produk");
-                exit;
+            header("Location: ../Page/admin/admin-page/read_produk.php");
+            exit;
         }
-    }
 
-    // Call this in your form-rendering view to embed the token
-    public static function generateCsrfToken(): string {
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-        return $_SESSION['csrf_token'];
-    }
-
-    // --- Private helpers ---
-
-    private function verifyCsrf(): void {
-        $token = $_POST['csrf_token'] ?? '';
-        if (empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $token)) {
-            http_response_code(403);
-            exit('Forbidden');
-        }
-        // Rotate the token after each use
-        unset($_SESSION['csrf_token']);
-    }
-
-    private function verifyDeleteToken(?string $id): void {
-        $token    = $_GET['token'] ?? '';
-        $expected = $_SESSION['delete_token_' . $id] ?? '';
-        if (empty($expected) || !hash_equals($expected, $token)) {
-            http_response_code(403);
-            exit('Forbidden');
-        }
-        unset($_SESSION['delete_token_' . $id]);
+        header("Location: ../Page/admin/admin-page/read_produk.php");
+        exit;
     }
 }
+
+$controller = new ProductController();
+$controller->handleRequest();
