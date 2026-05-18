@@ -12,6 +12,8 @@ switch ($page) {
     case 'bestSeller':
     case 'h2hproduk':
     case 'maintenance':
+    case 'search_artis':
+    case 'artistProduk':
         include "../Page/{$page}.php";
         break;
         

@@ -1,5 +1,5 @@
 <?php
-require_once '../../../config/database.php';
+require_once '../../config/database.php';
 
 $title = "Form Input Artis";
 
@@ -24,7 +24,7 @@ ob_start();
         <div class="card">
             <div class="card-body">
 
-                <form action="../../../Controller/Artis_controller.php" method="post">
+                <form action="../../Controller/Artis_controller.php" method="post">
 
                     <label class="form-label">
                         Nama Artis
@@ -51,5 +51,5 @@ ob_start();
 <?php
 $content = ob_get_clean();
 
-include __DIR__ . '/../partials/layout.php';
+include __DIR__ . '/partials/layout.php';
 ?>

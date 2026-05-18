@@ -1,108 +1,196 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . '/../config/database.php';
+
+$db = Database::getInstance();
+$conn = $db->getConnection();
+
+$error = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email_user = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $stmt = $conn->prepare("SELECT * FROM `user` WHERE email_user = ? LIMIT 1");
+    $stmt->bind_param("s", $email_user);
+    $stmt->execute();
+
+    $user = $stmt->get_result()->fetch_assoc();
+
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['id_user'] = $user['id_user'];
+        $_SESSION['nama_user'] = $user['nama_user'];
+        $_SESSION['email_user'] = $user['email_user'];
+        $_SESSION['role'] = $user['role'];
+
+        if ($user['role'] === 'admin') {
+            header("Location: /Page/admin/index.php");
+        } else {
+            header("Location: /index.php?Page=home");
+        }
+
+        exit;
+    } else {
+        $error = "Email atau password salah.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEVShop</title>
+    <title>Login - SEVShop</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-   <link rel="icon" type="image/png" href="/logo/favicon.png"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/logo/favicon.png"/>
 
-   <style>
+    <style>
+        body {
+            background: linear-gradient(135deg, #B3CCE5, #f7cfd1);
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
 
-    body {
-     background-color: #B3CCE5; 
-        font-family: Arial, sans-serif;
-    }
+        .login-card {
+            max-width: 620px;
+            margin: auto;
+            padding: 45px;
+            border-radius: 25px;
+            background-color: #ffffffcc;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
 
-    .container {
-        max-width: 700px;
-        margin-top: 40PX;
-        justify-content: center;
-        padding: 50px;
-        border-radius: 25px;
-        background-color: #9dceff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+        .logo-img {
+            max-width: 190px;
+            display: block;
+            margin: 0 auto 20px;
+        }
 
-    .custom-btn {
-    background-color: #ffaeac; /* warna biru custom */
-    color: rgb(5, 5, 5);
-    border: none;
-    }
+        .custom-btn {
+            background-color: #ffaeac;
+            color: #111;
+            border: none;
+            font-weight: 600;
+            padding: 10px;
+        }
 
-   .custom-btn:hover {
-    background-color: #ec707e; /* warna saat hover */
-     }
+        .custom-btn:hover {
+            background-color: #ec707e;
+            color: #111;
+        }
 
-     .divider {
-      border: none;
-      border-top: 3px solid white;
-      margin: 20px 0;
-    }
+        .form-control {
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
 
-     .btn-google {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #f1f1f1;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-    }
+        .divider {
+            border: none;
+            border-top: 2px solid #fff;
+            margin: 25px 0;
+        }
 
-    .btn-google img {
-      width: 20px;
-      height: 20px;
-    }
-     
-   </style>
-  
+        .btn-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #f1f1f1;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        a {
+            color: #111;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
-    <form action="/login" method="post">
-        <div class="pform ">
-            <a href="/index.html" class="logo">
-            <img src="/logo/Shopnavbar-removebg-preview.png" alt="" class="img-fluid mb-4" style="max-width: 200px; max-height: 30; display: block; margin: auto; margin-bottom: 20px;"> </a>
-            <h3 class="text-center mb-3">SEV Shop Akun Masuk / Daftar</h3>
-            <div class="mb-3 user">
-                <label for="username" class="form-label">Username/Email</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="your@email.com" required>
-            </div>
-            <div class="mb-4 pw">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
-            </div>
-            <button type="submit" class="btn  custom-btn  w-100">Log In</button>
+        <div class="login-card">
 
-            <div class="option text-center mt-3">
-                <div><span><a href="/register" style="color: black;">Lupa Password?</a></span><br></div>
-                <div class="mt-3"><span>Tidak memiliki Akun? <a href="register.html" style="color: black;">Daftar disini</a></span></div>
-                
-            </div>
-        </div> 
-    </form>    
-    
-    <hr class="divider">
+            <a href="/index.php?Page=home">
+                <img src="/logo/Shopnavbar-removebg-preview.png" alt="SEVShop Logo" class="logo-img">
+            </a>
 
-    <p class="text-center">Or</p>
+            <h3 class="text-center mb-2">Masuk Akun SEVShop</h3>
+            <p class="text-center text-muted mb-4">
+                Silakan masuk menggunakan akun yang sudah terdaftar.
+            </p>
 
-    <div class="google-login">
-     <button class="btn-google">
-     <img src="/logo/Google__G__logo.svg.png" alt="Google" width="20">
-     Continue with Google
-    </button>
-    </div>
+            <?php if (!empty($error)) { ?>
+                <div class="alert alert-danger">
+                    <?= htmlspecialchars($error, ENT_QUOTES); ?>
+                </div>
+            <?php } ?>
 
+            <form action="" method="post">
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Email</label>
+                    <input type="email"
+                           class="form-control"
+                           id="username"
+                           name="username"
+                           placeholder="your@email.com"
+                           required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password"
+                           class="form-control"
+                           id="password"
+                           name="password"
+                           placeholder="Masukkan password"
+                           required>
+                </div>
+
+                <button type="submit" class="btn custom-btn w-100">
+                    Log In
+                </button>
+
+                <div class="option text-center mt-3">
+                    <div>
+                        <a href="#">Lupa Password?</a>
+                    </div>
+
+                    <div class="mt-3">
+                        Tidak memiliki akun?
+                        <a href="/index.php?Page=register">Daftar di sini</a>
+                    </div>
+                </div>
+            </form>
+
+            <hr class="divider">
+
+            <p class="text-center mb-3">Or</p>
+
+            <button class="btn-google" type="button">
+                <img src="/logo/Google__G__logo.svg.png" alt="Google">
+                Continue with Google
+            </button>
+
+        </div>
     </div>
 </body>
 </html>

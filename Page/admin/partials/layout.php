@@ -1,3 +1,4 @@
+<?php include __DIR__ . '/../auth_check.php'; ?>
 <!doctype html>
 <html lang="en">
 

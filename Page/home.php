@@ -17,14 +17,27 @@ $data = $productModel -> readAll();
     <?php include __DIR__ . '/../Component/navbar.php'; ?>
     <?php include __DIR__ . '/../Component/heroo.php'; ?>
 
-    <div class="recart text-center fw-bold fs-4 mt-4">Recommended Artists</div>
+    <div class="recart text-center fw-bold fs-4 mt-4">
+    Recommended Artists
+    </div>
+
     <div class="iconArtist d-flex justify-content-center gap-3 flex-wrap mb-4 px-3">
-        
-        <?php while($rowArtis = $artists->fetch_assoc()): ?>
-        <a href="index.php?Page=produkArtis&id=<?= $rowArtis['id_artis'] ?>" class="artist-item text-center">
-            <img src="./logo/<?= $rowArtis['logo_artis'] ?>" class="rounded-3" alt="<?= $rowArtis['nama_artis'] ?>">
-            <div class="artist"><?= $rowArtis['nama_artis'] ?></div>
-        </a>
+
+        <?php while ($rowArtis = $artists->fetch_assoc()): ?>
+
+            <a href="/index.php?Page=artistProduk&id=<?= $rowArtis['id_artis']; ?>"
+            class="artist-item text-center text-decoration-none">
+
+                <img src="/logo/<?= htmlspecialchars($rowArtis['logo_artis'], ENT_QUOTES); ?>"
+                    class="rounded-3"
+                    alt="<?= htmlspecialchars($rowArtis['nama_artis'], ENT_QUOTES); ?>">
+
+                <div class="artist">
+                    <?= htmlspecialchars($rowArtis['nama_artis'], ENT_QUOTES); ?>
+                </div>
+
+            </a>
+
         <?php endwhile; ?>
 
     </div>

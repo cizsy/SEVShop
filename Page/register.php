@@ -1,127 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEVShop</title>
+<?php
+require_once __DIR__ . '/../Model/User.php';
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-   <link rel="icon" type="image/png" href="/logo/favicon.png"/>
+$userModel = new User();
 
-   <style>
+$error = "";
 
-    body {
-     background-color: #B3CCE5; 
-        font-family: Arial, sans-serif;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nama_user = $_POST['username'];
+    $email_user = $_POST['email'];
+    $no_hp = $_POST['phone'];
+    $password = $_POST['password'];
+    $confirm = $_POST['confirm'];
+
+    if ($password !== $confirm) {
+        $error = "Password dan konfirmasi password tidak sama.";
+    } elseif ($userModel->emailExists($email_user)) {
+        $error = "Email sudah dipakai.";
+    } else {
+        if ($userModel->register($nama_user, $email_user, $password, $no_hp)) {
+            header("Location: /index.php?Page=login");
+            exit;
+        } else {
+            $error = "Register gagal.";
+        }
     }
-
-    .container {
-        max-width: 700px;
-        margin-top: 40PX;
-        justify-content: center;
-        padding: 50px;
-        border-radius: 25px;
-        background-color: #9dceff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .custom-btn {
-    background-color: #ffaeac; /* warna biru custom */
-    color: rgb(5, 5, 5);
-    border: none;
-    }
-
-   .custom-btn:hover {
-    background-color: #ec707e; /* warna saat hover */
-     }
-
-     .divider {
-      border: none;
-      border-top: 3px solid white;
-      margin: 20px 0;
-    }
-
-     .btn-google {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #f1f1f1;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-    }
-
-    .btn-google img {
-      width: 20px;
-      height: 20px;
-    }
-     
-   </style>
-  
-</head>
-<body>
-    <div class="container">
-    <form action="/login" method="post">
-        <div class="pform ">
-            <a href="/index.html" class="logo">
-            <img src="/logo/Shopnavbar-removebg-preview.png" alt="" class="img-fluid mb-4" style="max-width: 200px; max-height: 30; display: block; margin: auto; margin-bottom: 20px;"></a>
-            <h3 class="text-center mb-3">Pendaftaran SEV Shop Akun</h3>
-            <div class="mb-3 user">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="user_name" required>
-            </div>
-            <div class="mb-3 email">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="your@email.com" required>
-            </div>
-            <div class="mb-3 phone">
-                <label for="phone" class="form-label ">Nomor HP</label>
-                <input
-                    type="tel" class="form-control"
-                    id="phone"
-                    name="phone"
-                    placeholder="08xxxxxxxxxx atau +62xxxxxxxxxx"
-                    inputmode="tel"
-                    autocomplete="tel"
-                    required
-                >
-            </div>
-            <div class="mb-3 pw">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
-            </div>
-            <div class="mb-4 confirmpw">
-                <label for="confirm" class="form-label">Konfirmasi Password</label>
-                <input type="password" class="form-control" id="confirm" name="comfirm" placeholder="password" required>
-            </div>
-
-            <button type="submit" class="btn  custom-btn  w-100">Sign Up</button>
-
-            <div class="option text-center mt-3 mb-4">
-                <div><span><a href="/register" style="color: black;">Sudah memiliki akun?</a></span><br></div>
-            </div>
-        </div> 
-    </form>    
-    
-    <hr class="divider">
-
-    <p class="text-center">Or</p>
-
-    <div class="google-login">
-     <button class="btn-google">
-     <img src="/logo/Google__G__logo.svg.png" alt="Google" width="20">
-     Lanjutkan dengan Google
-    </button>
-    </div>
-
-    </div>
-</body>
-</html>
+}
+?>
