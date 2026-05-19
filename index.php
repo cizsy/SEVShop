@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <?php include "component/header.php"; ?>
+    <?php include "Component/header.php"; ?>
 <body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
     
     <?php 
@@ -37,10 +37,6 @@
 
         case 'bestSeller':
             include "Page/bestSeller.php";
-            break;
-
-        case 'h2hproduk':
-            include "Page/h2hproduk.php";
             break;
 
         case 'maintenance':
