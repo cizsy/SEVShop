@@ -1,9 +1,9 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "sevshop_db";
-    private $username = "root"; 
-    private $password = "";
+    private $db_name = "mlebumyi_sevshop";
+    private $username = "mlebumyi_sevUser"; 
+    private $password = "aduhakulupa";
     private $conn;
     private static $instance = null;
 

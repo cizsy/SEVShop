@@ -2,8 +2,8 @@
 require_once '../../config/database.php';
 require_once '../../Model/Product.php';
 require_once '../../Model/artis.php';
-require_once '../../Model/Kategori.php';
-require_once '../../Model/Penerbit.php';
+require_once '../../Model/kategori.php';
+require_once '../../Model/penerbit.php';
 
 $productModel = new Product();
 $artistModel = new Artis();

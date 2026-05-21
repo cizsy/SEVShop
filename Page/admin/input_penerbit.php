@@ -1,5 +1,5 @@
 <?php
-require_once '../../Model/Penerbit.php';
+require_once '../../Model/penerbit.php';
 
 $penerbitModel = new Penerbit();
 
