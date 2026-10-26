@@ -5,7 +5,7 @@ $db = Database::getInstance();
 $conn = $db->getConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama = $_POST['nama_artis'] ?? '';
+    $nama = trim($_POST['nama_artis'] ?? '');
 
     if (!empty($nama)) {
         $stmt = $conn->prepare("INSERT INTO artis (nama_artis) VALUES (?)");
@@ -14,9 +14,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 
-    header("Location: ../Page/admin/admin-page/input_artis.php");
+    header("Location: /Page/admin/view_artis.php?status=success");
     exit;
 }
 
-header("Location: ../Page/admin/admin-page/input_artis.php");
+if (isset($_GET['id'])) {
+    $id = (int)$_GET['id'];
+    $stmt = $conn->prepare("DELETE FROM artis WHERE id_artis = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->close();
+    header("Location: /Page/admin/view_artis.php?status=deleted");
+    exit;
+}
+
+header("Location: /Page/admin/view_artis.php");
 exit;

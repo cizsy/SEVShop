@@ -1,261 +1,262 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-pop Merch Wishlist</title>
+    <title>Wishlist Saya - SEVShop</title>
+    <link rel="icon" type="image/png" href="/logo/favicon.png"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fce4ec;
-            color: #333;
+            background: linear-gradient(135deg, #f0f7ff 0%, #fff0f3 100%);
+            min-height: 100vh;
+            color: #2b3a4a;
         }
-
-        .header {
-            background-color: #e91e63;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .container {
+        .wishlist-wrapper {
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 35px auto 70px;
+            padding: 0 15px;
         }
-
-        .wishlist-count {
-            background-color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            display: inline-block;
-            margin-bottom: 20px;
-            font-weight: bold;
-            color: #e91e63;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .product-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+        .wishlist-card {
+            background: #ffffff;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 5px 15px rgba(80, 112, 150, 0.06);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
             position: relative;
         }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        .wishlist-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(236, 112, 126, 0.18);
+            border-color: #ffaeac;
         }
-
-        .product-image {
-            width: 100%;
+        .wishlist-img-wrap {
             height: 200px;
-            background-color: #f8bbd0;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+        .wishlist-img-wrap img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .btn-move-cart {
+            background: #ec707e;
+            color: white;
+            border: none;
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .product-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #e91e63;
-            margin-bottom: 8px;
-        }
-
-        .product-group {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .product-price {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .remove-btn {
+            padding: 9px 14px;
+            font-size: 13px;
+            font-weight: 700;
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e91e63;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background-color: #e91e63;
+            transition: all 0.2s;
+        }
+        .btn-move-cart:hover {
+            background: #e05364;
             color: white;
         }
-
-        .remove-btn:hover {
-            background-color: #c2185b;
-            border-color: #c2185b;
+        .btn-remove-wishlist {
+            background: #f1f5f9;
+            color: #64748b;
+            border: none;
+            border-radius: 10px;
+            padding: 7px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.2s;
         }
-
-        .wishlist-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #e91e63;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .empty-wishlist {
-            text-align: center;
-            padding: 60px 20px;
-            color: #666;
-        }
-
-        .empty-wishlist-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-
-        .empty-wishlist h2 {
-            font-size: 24px;
-            color: #e91e63;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #e91e63;
-            margin-bottom: 10px;
+        .btn-remove-wishlist:hover {
+            background: #fee2e2;
+            color: #ef4444;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Wishlist Saya</h1>
-        <p>Produk favorit yang ingin kamu beli</p>
-    </div>
 
-    <div class="container">
-        <div class="wishlist-count">
-            Total: <span id="wishlistTotal">0</span> Produk
+    <?php include __DIR__ . '/../Component/navbar.php'; ?>
+
+    <main class="wishlist-wrapper">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+            <div>
+                <h1 class="h3 fw-bold text-dark mb-1">
+                    <i class="bi bi-heart-fill text-danger me-2"></i> Wishlist Favorit Saya
+                </h1>
+                <p class="text-muted small mb-0">Daftar merchandise impian yang tersimpan di akun Anda.</p>
+            </div>
+            <div id="wishlistActions" style="display: none;">
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3 me-2" onclick="addAllToCart()">
+                    <i class="bi bi-bag-plus me-1"></i> Pindahkan Semua ke Keranjang
+                </button>
+                <button class="btn btn-light border btn-sm rounded-pill px-3" onclick="clearWishlist()">
+                    <i class="bi bi-trash me-1"></i> Bersihkan Wishlist
+                </button>
+            </div>
         </div>
-        <div class="products-grid" id="wishlistGrid"></div>
-        <div class="empty-wishlist" id="emptyWishlist">
-            <h2>Wishlist Masih Kosong</h2>
-            <p>Yuk tambahkan produk favorit kamu ke wishlist!</p>
+
+        <div id="emptyWishlistView" class="bg-white rounded-4 p-5 text-center shadow-sm border" style="display: none;">
+            <div style="font-size: 60px; margin-bottom: 12px;">💖✨</div>
+            <h3 class="fw-bold mb-2">Wishlist Masih Kosong</h3>
+            <p class="text-muted mb-4">Yuk simpan produk dan official merchandise incaranmu sekarang!</p>
+            <a href="/index.php?Page=search" class="btn btn-danger rounded-pill px-4 py-2 fw-bold" style="background:#ec707e; border:none;">
+                Jelajahi Merchandise
+            </a>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="wishlistGrid">
+            <!-- Dynamically populated via JS -->
+        </div>
+    </main>
+
+    <?php include __DIR__ . '/../Component/footer.php'; ?>
+
+    <!-- Toast Notification -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+        <div id="wishlistToast" class="toast align-items-center text-white bg-dark border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body" id="wishlistToastBody">
+                    Aksi berhasil!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Inisialisasi wishlist data
-        if (!window.wishlistData) {
-            window.wishlistData = {};
+        function showWishlistToast(msg) {
+            document.getElementById('wishlistToastBody').innerHTML = msg;
+            const toastEl = document.getElementById('wishlistToast');
+            const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
+            toast.show();
         }
 
-        // Fungsi untuk mendapatkan wishlist
-        function getWishlist() {
-            return window.wishlistData || {};
+        function renderWishlist() {
+            const grid = document.getElementById('wishlistGrid');
+            const emptyView = document.getElementById('emptyWishlistView');
+            const actions = document.getElementById('wishlistActions');
+            const saved = JSON.parse(localStorage.getItem('sev_wishlist') || '{}');
+            const items = Object.values(saved);
+
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                emptyView.style.display = 'block';
+                actions.style.display = 'none';
+                return;
+            }
+
+            emptyView.style.display = 'none';
+            actions.style.display = 'block';
+
+            items.forEach(item => {
+                const col = document.createElement('div');
+                col.className = 'col';
+                col.innerHTML = `
+                    <div class="wishlist-card">
+                        <a href="/index.php?Page=detailProduk&id=${item.id}" class="text-decoration-none">
+                            <div class="wishlist-img-wrap">
+                                ${item.image ? `<img src="/produk-cover/${item.image}" alt="${item.name}">` : '<i class="bi bi-gift fs-1 text-muted"></i>'}
+                            </div>
+                        </a>
+                        <div class="p-3 d-flex flex-column flex-grow-1 justify-content-between">
+                            <div>
+                                <span class="badge bg-danger-subtle text-danger mb-2 font-weight-normal">${item.group || 'K-Pop'}</span>
+                                <a href="/index.php?Page=detailProduk&id=${item.id}" class="text-decoration-none text-dark">
+                                    <h3 class="h6 fw-bold mb-2 text-truncate" title="${item.name}">${item.name}</h3>
+                                </a>
+                                <div class="fw-bold text-danger fs-6 mb-3">
+                                    Rp ${(item.price || 0).toLocaleString('id-ID')}
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gap-2">
+                                <button class="btn-move-cart" onclick="moveToCart(${item.id})">
+                                    <i class="bi bi-bag-plus-fill me-1"></i> Masukkan Keranjang
+                                </button>
+                                <button class="btn-remove-wishlist" onclick="removeFromWishlist(${item.id})">
+                                    <i class="bi bi-trash3 me-1"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(col);
+            });
         }
 
-        // Fungsi untuk format harga
-        function formatPrice(price) {
-            return 'Rp ' + price.toLocaleString('id-ID');
+        function moveToCart(productId) {
+            const formData = new FormData();
+            formData.append('action', 'add');
+            formData.append('id_produk', productId);
+            formData.append('qty', 1);
+
+            fetch('/index.php?Page=api_cart', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showWishlistToast('<i class="bi bi-check-circle-fill text-success me-2"></i>Produk dimasukkan ke keranjang!');
+                    const badge = document.getElementById('navCartBadge');
+                    if (badge) {
+                        badge.textContent = data.cartCount;
+                        badge.style.display = 'flex';
+                    }
+                }
+            });
         }
 
-        // Fungsi untuk render product card
-        function renderProductCard(product) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <div class="wishlist-badge">❤️</div>
-                <div class="product-image">${product.emoji || '🎁'}</div>
-                <div class="product-name">${product.name}</div>
-                <div class="product-group">${product.group || 'K-pop'}</div>
-                <div class="product-price">${formatPrice(product.price)}</div>
-                <button class="remove-btn" onclick="removeFromWishlist(${product.id})">
-                    🗑️ Hapus dari Wishlist
-                </button>
-            `;
-            return card;
-        }
-
-        // Fungsi untuk remove dari wishlist
         function removeFromWishlist(productId) {
-            if (window.wishlistData && window.wishlistData[productId]) {
-                delete window.wishlistData[productId];
-            }
-            // Trigger event untuk notify halaman lain
-            window.dispatchEvent(new CustomEvent('wishlistUpdated', { 
-                detail: { action: 'remove', productId: productId }
-            }));
-            updateWishlistUI();
+            let saved = JSON.parse(localStorage.getItem('sev_wishlist') || '{}');
+            delete saved[productId];
+            localStorage.setItem('sev_wishlist', JSON.stringify(saved));
+            window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+            renderWishlist();
+            showWishlistToast('<i class="bi bi-trash text-warning me-2"></i>Produk dihapus dari wishlist');
         }
 
-        // Fungsi untuk update UI wishlist
-        function updateWishlistUI() {
-            const wishlistGrid = document.getElementById('wishlistGrid');
-            const emptyWishlist = document.getElementById('emptyWishlist');
-            const wishlistTotal = document.getElementById('wishlistTotal');
-
-            wishlistGrid.innerHTML = '';
-
-            const wishlist = getWishlist();
-            const wishlistProducts = Object.values(wishlist);
-
-            if (wishlistProducts.length === 0) {
-                emptyWishlist.style.display = 'block';
-                wishlistGrid.style.display = 'none';
-            } else {
-                emptyWishlist.style.display = 'none';
-                wishlistGrid.style.display = 'grid';
-                wishlistProducts.forEach(product => {
-                    wishlistGrid.appendChild(renderProductCard(product));
-                });
-            }
-
-            wishlistTotal.textContent = wishlistProducts.length;
+        function clearWishlist() {
+            if (!confirm('Hapus seluruh produk di wishlist?')) return;
+            localStorage.removeItem('sev_wishlist');
+            window.dispatchEvent(new CustomEvent('wishlistUpdated'));
+            renderWishlist();
         }
 
-        // Listen untuk update dari halaman lain
-        window.addEventListener('wishlistUpdated', function() {
-            updateWishlistUI();
-        });
+        function addAllToCart() {
+            const saved = JSON.parse(localStorage.getItem('sev_wishlist') || '{}');
+            const items = Object.values(saved);
+            if (items.length === 0) return;
 
-        // Initialize
-        updateWishlistUI();
+            let promises = items.map(item => {
+                const formData = new FormData();
+                formData.append('action', 'add');
+                formData.append('id_produk', item.id);
+                formData.append('qty', 1);
+                return fetch('/index.php?Page=api_cart', { method: 'POST', body: formData });
+            });
 
-        // Update setiap 500ms untuk sinkronisasi dengan halaman lain
-        setInterval(updateWishlistUI, 500);
+            Promise.all(promises).then(() => {
+                window.location.href = '/index.php?Page=cart';
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', renderWishlist);
     </script>
 </body>
 </html>

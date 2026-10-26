@@ -6,7 +6,7 @@ $conn = $db->getConnection();
 
 /* ================= UPDATE ================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id   = $_POST['id_artis'] ?? null;
+    $id   = (int)($_POST['id_artis'] ?? 0);
     $nama = trim($_POST['nama_artis'] ?? '');
 
     if ($id && $nama !== '') {
@@ -16,23 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 
-    header("Location: /codekat/Page/admin/admin-page/view_artis.php");
+    header("Location: /Page/admin/view_artis.php?status=updated");
     exit;
 }
 
 /* ================= DELETE ================= */
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+    $id = (int)$_GET['id'];
 
     $stmt = $conn->prepare("DELETE FROM artis WHERE id_artis = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->close();
 
-    header("Location: /codekat/Page/admin/admin-page/view_artis.php");
+    header("Location: /Page/admin/view_artis.php?status=deleted");
     exit;
 }
 
 /* ================= DEFAULT ================= */
-header("Location: /codekat/Page/admin/admin-page/view_artis.php");
+header("Location: /Page/admin/view_artis.php");
 exit;
